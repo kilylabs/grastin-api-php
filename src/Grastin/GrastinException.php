@@ -2,4 +2,6 @@
 
 namespace Kily\Delivery\Grastin;
 
-class GrastinException extends \Exception {}
+class GrastinException extends \Exception
+{
+}
