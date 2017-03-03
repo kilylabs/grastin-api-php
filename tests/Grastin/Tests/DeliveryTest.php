@@ -59,8 +59,6 @@ class DeliveryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kily\Delivery\Grastin\Delivery::getOption
-     *
-     * @todo   Implement testGetOption().
      */
     public function testGetOption()
     {
@@ -70,8 +68,6 @@ class DeliveryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kily\Delivery\Grastin\Delivery::Orderinformation
-     *
-     * @todo   Implement testOrderinformation().
      */
     public function testOrderinformation()
     {
@@ -80,12 +76,11 @@ class DeliveryTest extends \PHPUnit_Framework_TestCase
         }
 
         $d = new Delivery($_SERVER['API_KEY']);
+        $d->orderinformation([123]);
     }
 
     /**
      * @covers Kily\Delivery\Grastin\Delivery::Selfpickup
-     *
-     * @todo   Implement testSelfpickup().
      */
     public function testSelfpickup()
     {
@@ -102,8 +97,6 @@ class DeliveryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kily\Delivery\Grastin\Delivery::Warehouse
-     *
-     * @todo   Implement testWarehouse().
      */
     public function testWarehouse()
     {
@@ -120,8 +113,6 @@ class DeliveryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kily\Delivery\Grastin\Delivery::Deliveryregion
-     *
-     * @todo   Implement testDeliveryregion().
      */
     public function testDeliveryregion()
     {
@@ -130,12 +121,11 @@ class DeliveryTest extends \PHPUnit_Framework_TestCase
         }
 
         $d = new Delivery($_SERVER['API_KEY']);
+        $d->deliveryregion();
     }
 
     /**
      * @covers Kily\Delivery\Grastin\Delivery::boxberryselfpickup
-     *
-     * @todo   Implement testBoxberryselfpickup().
      */
     public function testBoxberryselfpickup()
     {
@@ -144,12 +134,11 @@ class DeliveryTest extends \PHPUnit_Framework_TestCase
         }
 
         $d = new Delivery($_SERVER['API_KEY']);
+        $d->boxberryselfpickup();
     }
 
     /**
      * @covers Kily\Delivery\Grastin\Delivery::boxberrypostcode
-     *
-     * @todo   Implement testBoxberrypostcode().
      */
     public function testBoxberrypostcode()
     {
@@ -158,12 +147,11 @@ class DeliveryTest extends \PHPUnit_Framework_TestCase
         }
 
         $d = new Delivery($_SERVER['API_KEY']);
+        $d->boxberrypostcode();
     }
 
     /**
      * @covers Kily\Delivery\Grastin\Delivery::hermesselfpickup
-     *
-     * @todo   Implement testHermesselfpickup().
      */
     public function testHermesselfpickup()
     {
@@ -172,12 +160,11 @@ class DeliveryTest extends \PHPUnit_Framework_TestCase
         }
 
         $d = new Delivery($_SERVER['API_KEY']);
+        $d->hermesselfpickup();
     }
 
     /**
      * @covers Kily\Delivery\Grastin\Delivery::statushistory
-     *
-     * @todo   Implement testStatushistory().
      */
     public function testStatushistory()
     {
@@ -186,12 +173,11 @@ class DeliveryTest extends \PHPUnit_Framework_TestCase
         }
 
         $d = new Delivery($_SERVER['API_KEY']);
+        $d->statushistory([123]);
     }
 
     /**
      * @covers Kily\Delivery\Grastin\Delivery::printactofreceiving
-     *
-     * @todo   Implement testPrintactofreceiving().
      */
     public function testPrintactofreceiving()
     {
@@ -200,5 +186,7 @@ class DeliveryTest extends \PHPUnit_Framework_TestCase
         }
 
         $d = new Delivery($_SERVER['API_KEY']);
+        $d->printactofreceiving([123]);
     }
+
 }
