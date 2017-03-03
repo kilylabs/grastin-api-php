@@ -70,8 +70,8 @@ class Delivery
         $xml = $this->request(__FUNCTION__, $params);
         $data = $this->toArr($xml);
 
-        $data = $data['Order'];
-        if (!isset($data[0])) {
+        $data = isset($data['Order']) ? $data['Order'] : [];
+        if ($data && !isset($data[0])) {
             $data = [$data];
         }
         foreach ($data as $idx => $o) {
@@ -92,7 +92,7 @@ class Delivery
         $xml = $this->request(__FUNCTION__, []);
         $data = $this->toArr($xml);
 
-        return $data['Selfpickup'];
+        return isset($data['Selfpickup']) ? $data['Selfpickup'] : [];
     }
 
     public function Warehouse()
@@ -100,7 +100,7 @@ class Delivery
         $xml = $this->request(__FUNCTION__, []);
         $data = $this->toArr($xml);
 
-        return $data['Warehouse'];
+        return isset($data['Warehouse']) ? $data['Warehouse'] : [];
     }
 
     public function Deliveryregion()
@@ -108,7 +108,7 @@ class Delivery
         $xml = $this->request(__FUNCTION__, []);
         $data = $this->toArr($xml);
 
-        return $data['Region'];
+        return isset($data['Region']) ? $data['Region'] : [];
     }
 
     public function boxberryselfpickup()
@@ -116,7 +116,7 @@ class Delivery
         $xml = $this->request(__FUNCTION__, []);
         $data = $this->toArr($xml);
 
-        return $data['SelfpickupBoxberry'];
+        return isset($data['SelfpickupBoxberry']) ? $data['SelfpickupBoxberry'] : [];
     }
 
     public function boxberrypostcode()
@@ -124,7 +124,7 @@ class Delivery
         $xml = $this->request(__FUNCTION__, []);
         $data = $this->toArr($xml);
 
-        return $data['PostcodeBoxberry'];
+        return isset($data['PostcodeBoxberry']) ? $data['PostcodeBoxberry'] : [];
     }
 
     public function hermesselfpickup()
@@ -132,7 +132,7 @@ class Delivery
         $xml = $this->request(__FUNCTION__, []);
         $data = $this->toArr($xml);
 
-        return $data['SelfpickupHermes'];
+        return isset($data['SelfpickupHermes']) ? $data['SelfpickupHermes'] : [];
     }
 
     public function statushistory($orders)
@@ -150,8 +150,8 @@ class Delivery
         $xml = $this->request(__FUNCTION__, $params);
         $data = $this->toArr($xml);
 
-        $data = $data['Order'];
-        if (!isset($data[0])) {
+        $data = isset($data['Order']) ? $data['Order'] : [];
+        if ($data && !isset($data[0])) {
             $data = [$data];
         }
         foreach ($data as $idx => $o) {
@@ -213,7 +213,7 @@ class Delivery
         }
         $xml_string = $response->getBody();
         $xml = @simplexml_load_string($xml_string);
-        if (!$xml) {
+        if (false === $xml) {
             throw new GrastinException('Bad response from Grastin: '.$xml_string);
         }
 
