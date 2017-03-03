@@ -25,6 +25,7 @@ require('vendor/autoload.php');
 
 $d = new Kily\Delivery\Grastin\Delivery('<YOUR API KEY HERE>');
 
+var_dump($d->agentreportlist('2017-01-01','2017-01-31'));
 var_dump($d->orderinformation(["ИВН N-Р-33531","ИВН B-17622"]));
 var_dump($d->orderinformation("ИВН B-17622"));
 var_dump($d->selfpickup());
@@ -41,7 +42,6 @@ TODO
 -----
 - реализовать API методы
  - CalcShipingCost
- - agentreportlist
  - ContractList
  - orderlist
  - tcofficelist
