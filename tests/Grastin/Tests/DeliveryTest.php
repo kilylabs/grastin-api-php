@@ -189,4 +189,17 @@ class DeliveryTest extends \PHPUnit_Framework_TestCase
         $d->printactofreceiving([123]);
     }
 
+    /**
+     * @covers Kily\Delivery\Grastin\Delivery::agentreportlist
+     */
+    public function testAgentreportlist()
+    {
+        if (!isset($_SERVER['API_KEY'])) {
+            $this->markTestSkipped('No API_KEY defined');
+        }
+
+        $d = new Delivery($_SERVER['API_KEY']);
+        $list = $d->agentreportlist('1970-01-01','1970-01-01');
+        $this->assertTrue(is_array($list));
+    }
 }

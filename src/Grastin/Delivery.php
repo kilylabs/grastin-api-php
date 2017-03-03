@@ -193,6 +193,20 @@ class Delivery
         return $tmp;
     }
 
+    public function agentreportlist($datestart,$dateend)
+    {
+        if($datestart && !preg_match('/^\d{8}$/',$datestart)) $datestart = date('dmY',strtotime($datestart));
+        if($dateend && !preg_match('/^\d{8}$/',$dateend)) $dateend = date('dmY',strtotime($dateend));
+
+        $xml = $this->request(__FUNCTION__, array_filter([
+            'Datestart'=>$datestart,
+            'Dateend'=>$dateend,
+        ]));
+        $data = $this->toArr($xml);
+
+        return isset($data['AgentReport']) ? $data['AgentReport'] : [];
+    }
+
     protected function request($method, $params, $raw = false)
     {
         try {
