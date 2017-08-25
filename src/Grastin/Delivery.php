@@ -84,7 +84,87 @@ class Delivery
             }
         }
 
-        return is_array($orders) ? $data : $data[0];
+        return is_array($orders) && $orders ? $data[0] : $data;
+    }
+
+    public function newordermail($number,$service,$shippingdate,$zipcode,$address,$city,$region,$buyer,$is_cod,$summa,$value,$phone,$comment=null,$goods=[],$other_options=[]) {
+        $params = compact('number','service','zipcode','address','city','region','buyer','summa','value','phone','comment');
+
+        $params['shippingdate'] = $shippingdate instanceof \DateTime ? $shippingdate->format('dmY') : date('dmY', strtotime($shippingdate));
+
+        if(is_bool($is_cod) || is_numeric($is_cod)) $params['cod']=$is_cod ? 'yes' : 'no';
+        else $params['cod'] = $is_cod;
+
+        $tmp_params = [];
+        foreach($params as $k=>$v) {
+            if(is_array($v)) $tmp_params[$k] = $v;
+            else $tmp_params['@'.$k] = $v;
+        }
+        $params = $tmp_params;
+
+        foreach($goods as $idx=>$good) {
+            $tmp_good = [];
+            foreach($good as $k=>$v) {
+                $tmp_good['@'.$k] = $v;
+            }
+            $goods[$idx] = $tmp_good;
+        }
+
+        $params = [
+            'Orders'=>[
+                'Order'=>array_merge($other_options,['good'=>$goods],$params)
+            ]
+        ];
+
+        $xml = $this->request(__FUNCTION__, $params);
+        $data = $this->toArr($xml);
+
+        return $data;
+
+    }
+
+    public function newordercourier($number,$service,$address,$shippingdate,$buyer,$summa,$assessedsumma,$phone1,$phone2=null,$seats=1,$shippingtimefrom=null,$shippingtimefor=null,$comment=null,$goods=[],$other_options=[]) 
+    {
+        $params = compact('number','service','address','buyer','summa','assessedsumma','phone1','seats','comment');
+        $params['shippingdate'] = $shippingdate instanceof \DateTime ? $shippingdate->format('dmY') : date('dmY', strtotime($shippingdate));
+
+        if ($shippingtimefrom) {
+            $params['shippingtimefrom'] = $shippingtimefrom instanceof \DateTime ? $shippingtimefrom->format('H:i') : date('H:i', strtotime($shippingtimefrom));
+        }
+
+        if ($shippingtimefor) {
+            $params['shippingtimefor'] = $shippingtimefor instanceof \DateTime ? $shippingtimefor->format('H:i') : date('H:i', strtotime($shippingtimefor));
+        }
+
+        if($phone2) {
+            $params['phone2'] = $phone2;
+        }
+
+        $tmp_params = [];
+        foreach($params as $k=>$v) {
+            if(is_array($v)) $tmp_params[$k] = $v;
+            else $tmp_params['@'.$k] = $v;
+        }
+        $params = $tmp_params;
+
+        foreach($goods as $idx=>$good) {
+            $tmp_good = [];
+            foreach($good as $k=>$v) {
+                $tmp_good['@'.$k] = $v;
+            }
+            $goods[$idx] = $tmp_good;
+        }
+
+        $params = [
+            'Orders'=>[
+                'Order'=>array_merge($other_options,['good'=>$goods],$params)
+            ]
+        ];
+
+        $xml = $this->request(__FUNCTION__, $params);
+        $data = $this->toArr($xml);
+
+        return $data;
     }
 
     public function Selfpickup()
@@ -220,7 +300,7 @@ class Delivery
                 ],
             ]);
         } catch (\GuzzleHttp\Exception\RequestException $e) {
-            throw new GrastinException('Exception thrown while making request', 0, $e);
+            throw new GrastinException('Exception thrown while making request: '.$e->__toString(), 0, $e);
         }
         if ($raw) {
             return $response;
@@ -260,7 +340,11 @@ class Delivery
                     $this->toXml($v, $xml->addChild($k), $k);
                 }
             } else {
-                $xml->addChild($k, $v);
+                if (strpos($k, '@') === 0) {
+                    $xml->addAttribute(substr($k, 1), $v);
+                } else {
+                    $xml->addChild($k, $v);
+                }
             }
         }
 
