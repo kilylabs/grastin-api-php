@@ -45,8 +45,6 @@ TODO
  - ContractList
  - orderlist
  - tcofficelist
- - newordercourier
- - newordermail
  - neworderboxberry
  - neworderhermes
  - RequestForIntake
