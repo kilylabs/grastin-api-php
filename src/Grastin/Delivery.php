@@ -84,7 +84,7 @@ class Delivery
             }
         }
 
-        return is_array($orders) && $orders ? $data[0] : $data;
+        return is_array($orders) && $orders ? (isset($data[0]) ? $data[0] : null) : $data;
     }
 
     public function newordermail($number,$service,$shippingdate,$zipcode,$address,$city,$region,$buyer,$is_cod,$summa,$value,$phone,$comment=null,$goods=[],$other_options=[]) {
